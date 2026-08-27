@@ -31,7 +31,7 @@ export const MANIFEST_NOTE =
 
 /** OS에 관계없이 승인 기록은 저장소 상대 경로를 '/'로 보존한다. */
 export function normalizeRepoPath(file: string): string {
-  return file.replaceAll('\\\\', '/')
+  return file.replaceAll('\\', '/')
 }
 
 /** 경로 하나에 대한 승인. 무엇을(hash) 누가 언제 왜 승인했는지를 경로마다 따로 남긴다 */
