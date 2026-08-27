@@ -31,25 +31,25 @@
       "approvedBy": "알 수 없음",
       "reason": "기존 검증 하네스 및 보호 문서 변경 승인"
     },
-    "scripts\\verify\\approve.ts": {
+    "scripts/verify/approve.ts": {
       "hash": "fd195664556866bb9aa2b0c46661119ff5eb5f4ac6a770cdf8cd13c065333459",
       "approvedAt": "2026-08-27T01:18:21.449Z",
       "approvedBy": "알 수 없음",
       "reason": "기존 검증 하네스 및 보호 문서 변경 승인"
     },
-    "scripts\\verify\\architecture.ts": {
+    "scripts/verify/architecture.ts": {
       "hash": "208a60b91b9850f5540779dbabacc54a631355babc496d0d6bc8c9236b84ccf0",
       "approvedAt": "2026-08-27T01:18:21.476Z",
       "approvedBy": "알 수 없음",
       "reason": "기존 검증 하네스 및 보호 문서 변경 승인"
     },
-    "scripts\\verify\\protected-manifest.ts": {
-      "hash": "7737f34869ed6816cd4d93c6706df916edaa8f25b7edb2cf4fb2a9d31b14b4cd",
-      "approvedAt": "2026-08-27T02:27:22.574Z",
+    "scripts/verify/protected-manifest.ts": {
+      "hash": "45a4d8d98513c72f7628cd564fe6834830044eac6f64bb3b03d40b25433f38b1",
+      "approvedAt": "2026-08-27T02:33:34.777Z",
       "approvedBy": "jo-narae <nare6004@gmail.com>",
       "reason": "Windows와 Linux 간 보호 경로 표기를 정규화해 CI Protected 오탐을 수정"
     },
-    "scripts\\verify\\protected.ts": {
+    "scripts/verify/protected.ts": {
       "hash": "0091b4aa91b7f469d3fa2f99a9b7a36496c380bf3e39973891e053c7355c6868",
       "approvedAt": "2026-08-27T01:18:21.528Z",
       "approvedBy": "알 수 없음",
