@@ -35,14 +35,18 @@ const SKIP = ['src/generated', 'node_modules', '.next']
 
 type Violation = { file: string; line: number; text: string; rule: string }
 
+function repoPath(file: string): string {
+  return file.replaceAll('\\', '/')
+}
+
 function walk(dir: string): string[] {
   if (!statSync(dir, { throwIfNoEntry: false })?.isDirectory()) return []
   const out: string[] = []
   for (const entry of readdirSync(dir)) {
     const full = path.join(dir, entry)
-    if (SKIP.some((s) => full.startsWith(s))) continue
+    if (SKIP.some((s) => repoPath(full).startsWith(s))) continue
     if (statSync(full).isDirectory()) out.push(...walk(full))
-    else if (/\.(ts|tsx)$/.test(entry)) out.push(full)
+    else if (/\.(ts|tsx)$/.test(entry)) out.push(repoPath(full))
   }
   return out
 }
