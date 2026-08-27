@@ -48,7 +48,8 @@ export type Manifest = {
 }
 
 export function hashOf(file: string): string {
-  return createHash('sha256').update(readFileSync(file)).digest('hex')
+  const content = readFileSync(file, 'utf8').replace(/\r\n/g, '\n')
+  return createHash('sha256').update(content, 'utf8').digest('hex')
 }
 
 function walkTs(dir: string): string[] {
