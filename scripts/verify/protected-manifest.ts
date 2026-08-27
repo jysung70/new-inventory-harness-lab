@@ -29,6 +29,11 @@ export const MANIFEST_PATH = 'scripts/verify/protected.json'
 export const MANIFEST_NOTE =
   '보호 경로 승인 기록 — docs/harness/01-ssot.md §6. 직접 편집하지 말고 npm run verify:approve 로 갱신한다'
 
+/** OS에 관계없이 승인 기록은 저장소 상대 경로를 '/'로 보존한다. */
+export function normalizeRepoPath(file: string): string {
+  return file.replaceAll('\\', '/')
+}
+
 /** 경로 하나에 대한 승인. 무엇을(hash) 누가 언제 왜 승인했는지를 경로마다 따로 남긴다 */
 export type PathApproval = {
   hash: string
@@ -43,7 +48,8 @@ export type Manifest = {
 }
 
 export function hashOf(file: string): string {
-  return createHash('sha256').update(readFileSync(file)).digest('hex')
+  const content = readFileSync(file, 'utf8').replace(/\r\n/g, '\n')
+  return createHash('sha256').update(content, 'utf8').digest('hex')
 }
 
 function walkTs(dir: string): string[] {
@@ -69,7 +75,7 @@ export function expandProtected(): string[] {
       files.push(entry) // 없는 파일도 목록에 넣는다 — 삭제를 잡기 위해
     }
   }
-  return [...new Set(files)].filter((f) => f !== MANIFEST_PATH).sort()
+  return [...new Set(files.map(normalizeRepoPath))].filter((f) => f !== MANIFEST_PATH).sort()
 }
 
 export function currentHashes(): Record<string, string> {
@@ -92,7 +98,8 @@ export function readManifest(): Manifest | null {
     paths?: Record<string, string | PathApproval>
   }
   const paths: Record<string, PathApproval> = {}
-  for (const [file, value] of Object.entries(raw.paths ?? {})) {
+  for (const [rawFile, value] of Object.entries(raw.paths ?? {})) {
+    const file = normalizeRepoPath(rawFile)
     paths[file] =
       typeof value === 'string'
         ? {

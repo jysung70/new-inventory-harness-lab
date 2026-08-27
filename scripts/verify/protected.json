@@ -3,57 +3,57 @@
   "paths": {
     "docs/01-requirements.md": {
       "hash": "0a5c88fb9be5b1688b925063862606534367b66cfdbb5a400830bb4f911a7d3c",
-      "approvedAt": "2026-08-26T07:45:21.331Z",
+      "approvedAt": "2026-08-27T02:46:54.509Z",
       "approvedBy": "jo-narae <nare6004@gmail.com>",
-      "reason": "(사유 미기재)"
+      "reason": "Windows와 Linux 줄바꿈 차이를 제거한 OS 독립적 보호 파일 해시 기준으로 갱신"
     },
     "docs/06-architecture.md": {
       "hash": "aab17e1eaf0d439c0a92321845ca146765515b8b379d3a3f08460955fea81ac4",
-      "approvedAt": "2026-08-26T07:45:21.331Z",
+      "approvedAt": "2026-08-27T02:46:54.564Z",
       "approvedBy": "jo-narae <nare6004@gmail.com>",
-      "reason": "(사유 미기재)"
+      "reason": "Windows와 Linux 줄바꿈 차이를 제거한 OS 독립적 보호 파일 해시 기준으로 갱신"
     },
     "docs/harness/01-ssot.md": {
-      "hash": "2c943feecf9715376a90d976465012cabab5fd50c9cf20c379b2889545a8bc9c",
-      "approvedAt": "2026-08-26T11:12:46.852Z",
+      "hash": "fd490bbcccd82a7ade7b4c0dac973eac6678d8867bbee829d530f50a3f9a82be",
+      "approvedAt": "2026-08-27T02:20:24.150Z",
       "approvedBy": "jo-narae <nare6004@gmail.com>",
-      "reason": "보호 경로 우회 제거 — 범위 승인으로 전환"
+      "reason": "03-loop 정본 등록 및 구현·검증 루프 원본 연결 승인"
     },
     "docs/harness/02-verification.md": {
       "hash": "511f10fc6cbb670b804055bba271352f56f2435eba6ab9fdee0550a9974b57f8",
-      "approvedAt": "2026-08-26T11:12:46.892Z",
+      "approvedAt": "2026-08-27T02:46:54.617Z",
       "approvedBy": "jo-narae <nare6004@gmail.com>",
-      "reason": "보호 경로 우회 제거 — 범위 승인으로 전환"
+      "reason": "Windows와 Linux 줄바꿈 차이를 제거한 OS 독립적 보호 파일 해시 기준으로 갱신"
     },
     "prisma/schema.prisma": {
       "hash": "da9f96ad255e07d1226b7c80fda5803a5582c9e4cb4910e0a274752692ad8244",
-      "approvedAt": "2026-08-26T07:45:21.331Z",
+      "approvedAt": "2026-08-27T02:46:54.671Z",
       "approvedBy": "jo-narae <nare6004@gmail.com>",
-      "reason": "(사유 미기재)"
+      "reason": "Windows와 Linux 줄바꿈 차이를 제거한 OS 독립적 보호 파일 해시 기준으로 갱신"
     },
     "scripts/verify/approve.ts": {
       "hash": "3510c36b57c87d912db02e116c870ac7473d1fba29f5cb0525725913ad2d1bf5",
-      "approvedAt": "2026-08-26T11:12:46.932Z",
+      "approvedAt": "2026-08-27T02:46:54.725Z",
       "approvedBy": "jo-narae <nare6004@gmail.com>",
-      "reason": "보호 경로 우회 제거 — 범위 승인으로 전환"
+      "reason": "Windows와 Linux 줄바꿈 차이를 제거한 OS 독립적 보호 파일 해시 기준으로 갱신"
     },
     "scripts/verify/architecture.ts": {
       "hash": "db9c8443d88e5448fabef0854c1648664d7dd5ab25e39afff9dc252b31da66fc",
-      "approvedAt": "2026-08-26T07:45:21.331Z",
+      "approvedAt": "2026-08-27T02:46:54.779Z",
       "approvedBy": "jo-narae <nare6004@gmail.com>",
-      "reason": "(사유 미기재)"
+      "reason": "Windows와 Linux 줄바꿈 차이를 제거한 OS 독립적 보호 파일 해시 기준으로 갱신"
     },
     "scripts/verify/protected-manifest.ts": {
-      "hash": "9ebca215c37b791b35ba68ded04e959e412681a8f8fe3c7b101c95b4c1c6c649",
-      "approvedAt": "2026-08-26T11:12:46.973Z",
+      "hash": "bce2905617d9c84226e60499a5e7445152e329c8044676e16b6fd9396cadbc0a",
+      "approvedAt": "2026-08-27T02:46:54.833Z",
       "approvedBy": "jo-narae <nare6004@gmail.com>",
-      "reason": "보호 경로 우회 제거 — 범위 승인으로 전환"
+      "reason": "Windows와 Linux 줄바꿈 차이를 제거한 OS 독립적 보호 파일 해시 기준으로 갱신"
     },
     "scripts/verify/protected.ts": {
       "hash": "42a76db9e2f79e23ffa389f630b6198fe261ef01a304254bfd58c908bff293fe",
-      "approvedAt": "2026-08-26T11:12:47.014Z",
+      "approvedAt": "2026-08-27T02:46:54.887Z",
       "approvedBy": "jo-narae <nare6004@gmail.com>",
-      "reason": "보호 경로 우회 제거 — 범위 승인으로 전환"
+      "reason": "Windows와 Linux 줄바꿈 차이를 제거한 OS 독립적 보호 파일 해시 기준으로 갱신"
     }
   }
 }
