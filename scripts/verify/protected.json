@@ -38,10 +38,10 @@
       "reason": "Windows와 Linux 줄바꿈 차이를 제거한 OS 독립적 보호 파일 해시 기준으로 갱신"
     },
     "scripts/verify/architecture.ts": {
-      "hash": "db9c8443d88e5448fabef0854c1648664d7dd5ab25e39afff9dc252b31da66fc",
-      "approvedAt": "2026-08-27T02:46:54.779Z",
+      "hash": "0c71b6ffb74be7041f251076be6627c12bc20f111ea6ff1b17b521a7e9ee2d5e",
+      "approvedAt": "2026-08-27T05:53:32.973Z",
       "approvedBy": "jo-narae <nare6004@gmail.com>",
-      "reason": "Windows와 Linux 줄바꿈 차이를 제거한 OS 독립적 보호 파일 해시 기준으로 갱신"
+      "reason": "Issue #4: Windows/Linux에서 Architecture 경로를 동일하게 해석하도록 수정"
     },
     "scripts/verify/protected-manifest.ts": {
       "hash": "bce2905617d9c84226e60499a5e7445152e329c8044676e16b6fd9396cadbc0a",
