@@ -45,6 +45,13 @@ export function tallyPopup(movements: MovementLike[], popupLocationId: number): 
   }
 }
 
+// ───────────────────────── 기간
+
+/** 종료일 당일은 유효하고, 다음 날부터 표시만 기한 지남으로 구분한다. */
+export function isPopupExpired(endDate: Date | string, asOf: Date | string = new Date()): boolean {
+  return dateOnly(asOf).getTime() > dateOnly(endDate).getTime()
+}
+
 // ───────────────────────── 조회
 
 export async function getPopupList() {
@@ -59,6 +66,7 @@ export async function getPopupList() {
     status: p.status,
     startDate: p.startDate,
     endDate: p.endDate,
+    expired: isPopupExpired(p.endDate),
     onHand: p.location.lots.reduce((s, l) => s + l.quantity, 0),
     ...tallyPopup(p.movements, p.locationId),
   }))
@@ -134,6 +142,7 @@ export async function getPopupDetail(popupId: number) {
 
   return {
     popup,
+    expired: isPopupExpired(popup.endDate),
     totals,
     byProduct: [...byProduct.values()].sort((a, b) => b.shipped - a.shipped || a.name.localeCompare(b.name, 'ko')),
     /** 정산 입력 대상 — 팝업에 남아 있는 로트 (유통기한을 보존해야 복귀 로트가 맞는다) */

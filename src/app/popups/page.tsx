@@ -51,6 +51,7 @@ export default async function PopupsPage() {
               <Badge tone={TONE[p.status as PopupStatus]}>
                 {POPUP_STATUS_LABEL[p.status as PopupStatus]}
               </Badge>
+              {p.expired && <Badge tone="red">기한 지남</Badge>}
               <span className="text-sub">›</span>
             </div>
           </div>
@@ -77,7 +78,10 @@ export default async function PopupsPage() {
                 className="flex items-center justify-between border-b border-line px-4 py-3"
               >
                 <div>
-                  <p className="text-[13px] font-bold">{p.name}</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-[13px] font-bold">{p.name}</p>
+                    {p.expired && <Badge tone="red">기한 지남</Badge>}
+                  </div>
                   <p className="mt-[3px] text-[11px] text-sub tnum">
                     반출 {p.shipped} · 판매 {p.sold} · 시식 {p.sample} · 반입 {p.returned}
                   </p>
