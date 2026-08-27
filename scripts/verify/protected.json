@@ -30,30 +30,6 @@
       "approvedAt": "2026-08-26T07:45:21.331Z",
       "approvedBy": "jo-narae <nare6004@gmail.com>",
       "reason": "(사유 미기재)"
-    },
-    "scripts/verify/approve.ts": {
-      "hash": "3510c36b57c87d912db02e116c870ac7473d1fba29f5cb0525725913ad2d1bf5",
-      "approvedAt": "2026-08-26T11:12:46.932Z",
-      "approvedBy": "jo-narae <nare6004@gmail.com>",
-      "reason": "보호 경로 우회 제거 — 범위 승인으로 전환"
-    },
-    "scripts/verify/architecture.ts": {
-      "hash": "db9c8443d88e5448fabef0854c1648664d7dd5ab25e39afff9dc252b31da66fc",
-      "approvedAt": "2026-08-26T07:45:21.331Z",
-      "approvedBy": "jo-narae <nare6004@gmail.com>",
-      "reason": "(사유 미기재)"
-    },
-    "scripts/verify/protected-manifest.ts": {
-      "hash": "9ebca215c37b791b35ba68ded04e959e412681a8f8fe3c7b101c95b4c1c6c649",
-      "approvedAt": "2026-08-26T11:12:46.973Z",
-      "approvedBy": "jo-narae <nare6004@gmail.com>",
-      "reason": "보호 경로 우회 제거 — 범위 승인으로 전환"
-    },
-    "scripts/verify/protected.ts": {
-      "hash": "42a76db9e2f79e23ffa389f630b6198fe261ef01a304254bfd58c908bff293fe",
-      "approvedAt": "2026-08-26T11:12:47.014Z",
-      "approvedBy": "jo-narae <nare6004@gmail.com>",
-      "reason": "보호 경로 우회 제거 — 범위 승인으로 전환"
     }
   }
 }
