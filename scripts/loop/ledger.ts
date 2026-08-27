@@ -26,8 +26,9 @@ export function decodeLedger(body: string): LoopLedger | null {
 }
 
 export function parseIssueMaxLoops(body: string): string | undefined {
-  const match = body.match(/(?:id:\s*)?max-loops[\s\S]{0,300}?value:\s*["']?([1235])["']?/i)
-  return match?.[1]
+  const section = body.match(/(?:^|\n)#{1,6}\s*6\.\s*[^\n]*\n([\s\S]*?)(?=\n#{1,6}\s|$)/i)
+  const value = section?.[1].match(/^\s*(?:[-*]\s*)?([1235])\s*$/m)
+  return value?.[1]
 }
 
 export function ghCli(): Gh {

@@ -13,10 +13,18 @@ export type LoopState =
   | 'IN_PROGRESS'
   | 'VERIFYING'
   | 'PASSED'
+  | 'READY_FOR_REVIEW'
+  | 'READY_FOR_PR'
+  | 'PR_OPEN'
+  | 'CI_PENDING'
+  | 'CI_RUNNING'
+  | 'CI_PASSED'
+  | 'CI_FAILED'
+  | 'CI_CANCELLED'
+  | 'HUMAN_REVIEW'
   | 'RETRYABLE_FAILURE'
   | 'RETRY_EXHAUSTED'
   | 'NEEDS_HUMAN'
-  | 'READY_FOR_REVIEW'
   | 'CHANGES_REQUESTED'
   | 'READY_FOR_MERGE'
   | 'MERGED'
@@ -50,14 +58,102 @@ export type Attempt = {
   verification?: VerificationResult
 }
 
+export type CompletionEvidence = {
+  headSha: string
+  localVerifyRunId: string
+  localVerifyResult: 'PASS'
+  issueConditionsComplete: boolean
+  completionCommentId: string
+}
+
+export type PrLink = {
+  number: number
+  url: string
+  branch: string
+  baseSha: string
+  headSha: string
+}
+
+export type CiRun = {
+  runId: string
+  headSha: string
+  status: 'PENDING' | 'RUNNING' | 'PASS' | 'FAIL' | 'CANCELLED'
+  firstFailingStage?: FailureKind
+  rerunId?: string
+  reproducedLocally?: boolean
+}
+
 export type LoopLedger = {
   schemaVersion: 1
   issue: number
+  repository?: string
+  branch?: string
+  baseSha?: string
+  headSha?: string
+  changedPaths?: string[]
   maxLoops: MaxLoops
   state: LoopState
   consumedAttempts: number
   attempts: Attempt[]
+  completion?: CompletionEvidence
+  verification?: VerificationResult
+  completionCommentId?: string
+  humanDecision?: string
+  nextAction?: string
+  session?: { agent: string; sessionId: string; updatedAt: string }
+  pr?: PrLink
+  ciRuns?: CiRun[]
   activeClaim?: { sessionId: string; claimedAt: string; headSha: string }
+}
+
+export function canEnterPr(ledger: LoopLedger, headSha: string): boolean {
+  return ledger.state === 'READY_FOR_PR' && ledger.completion?.headSha === headSha &&
+    ledger.completion.localVerifyRunId.length > 0 && ledger.completion.issueConditionsComplete &&
+    ledger.completion.completionCommentId.length > 0
+}
+
+export function linkPr(ledger: LoopLedger, pr: PrLink): LoopLedger {
+  if (!canEnterPr(ledger, pr.headSha)) throw new Error('로컬 PASS·Issue 종료 조건·완료 코멘트가 같은 head에 없습니다')
+  if (ledger.pr && (ledger.pr.number !== pr.number || ledger.pr.headSha !== pr.headSha))
+    throw new Error('다른 PR 또는 head가 이미 연결되어 있습니다')
+  return { ...ledger, pr, state: 'PR_OPEN' }
+}
+
+export function recordCi(ledger: LoopLedger, run: CiRun): LoopLedger {
+  if (!ledger.pr || ledger.pr.headSha !== run.headSha) throw new Error('CI 결과의 head가 PR head와 다릅니다')
+  const ciRuns = [...(ledger.ciRuns ?? []), run]
+  const state = run.status === 'PASS' ? 'CI_PASSED' : run.status === 'FAIL' ? 'CI_FAILED' : run.status === 'CANCELLED' ? 'CI_CANCELLED' : run.status === 'RUNNING' ? 'CI_RUNNING' : 'CI_PENDING'
+  return { ...ledger, ciRuns, state }
+}
+
+export function handleCiReproduction(ledger: LoopLedger, runId: string, reproduced: boolean): LoopLedger {
+  const run = ledger.ciRuns?.find((x) => x.runId === runId)
+  if (!run || run.status !== 'FAIL') throw new Error('재현할 CI 실패 기록을 찾을 수 없습니다')
+  const updatedRuns = ledger.ciRuns!.map((x) => x.runId === runId ? { ...x, reproducedLocally: reproduced } : x)
+  return { ...ledger, ciRuns: updatedRuns, state: reproduced ? 'IN_PROGRESS' : 'NEEDS_HUMAN' }
+}
+
+export function humanReview(ledger: LoopLedger): LoopLedger {
+  const current = ledger.ciRuns?.at(-1)
+  if (ledger.state !== 'CI_PASSED' || !ledger.pr || current?.headSha !== ledger.pr.headSha)
+    throw new Error('현재 PR head의 CI PASS 후에만 사람 Review로 이동할 수 있습니다')
+  return { ...ledger, state: 'HUMAN_REVIEW' }
+}
+
+export function recordCompletion(ledger: LoopLedger, evidence: CompletionEvidence): LoopLedger {
+  if (ledger.state !== 'PASSED') throw new Error('02 PASS 후에만 완료 증거를 기록할 수 있습니다')
+  const last = ledger.attempts.at(-1)
+  if (!last || last.status !== 'JUDGED' || last.headSha !== evidence.headSha || last.verification?.result !== 'PASS') {
+    throw new Error('완료 증거는 현재 head의 02 PASS 뒤에만 기록할 수 있습니다')
+  }
+  if (!evidence.issueConditionsComplete || !evidence.localVerifyRunId || !evidence.completionCommentId) {
+    throw new Error('로컬 PASS·Issue 종료 조건·완료 코멘트가 모두 필요합니다')
+  }
+  return { ...ledger, completion: evidence, state: 'READY_FOR_PR' }
+}
+
+export function isSameHeadVerification(ledger: LoopLedger, headSha: string): boolean {
+  return ledger.attempts.some((attempt) => attempt.headSha === headSha)
 }
 
 export function parseMaxLoops(raw: string | undefined): MaxLoops {
